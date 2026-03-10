@@ -4,15 +4,13 @@ import {
   updateStoredAuth,
 } from "../state/authStorage";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, "");
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "")
+  .trim()
+  .replace(/\/+$/, "");
 
 function buildUrl(path, params) {
-  if (!API_BASE_URL) {
-    throw new Error("VITE_API_BASE_URL is not set.");
-  }
-
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-  const url = new URL(`${API_BASE_URL}${normalizedPath}`);
+  const url = new URL(`${API_BASE_URL}${normalizedPath}`, window.location.origin);
 
   if (params) {
     Object.entries(params).forEach(([key, value]) => {
@@ -33,10 +31,14 @@ async function refreshTokens() {
     return null;
   }
 
-  const response = await fetch(
-    buildUrl("/api/v1/auth/refresh", { refresh_token: auth.refreshToken }),
-    { method: "POST" },
-  );
+  const response = await fetch(buildUrl("/api/v1/auth/refresh"), {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ refresh_token: auth.refreshToken }),
+  });
 
   if (!response.ok) {
     clearStoredAuth();
@@ -64,7 +66,7 @@ export async function apiRequest(path, options = {}) {
   const authState = getStoredAuth();
   const requestHeaders = new Headers(headers || {});
 
-  if (!(body instanceof FormData)) {
+  if (body !== undefined && !(body instanceof FormData)) {
     requestHeaders.set("Content-Type", "application/json");
   }
 
@@ -74,6 +76,7 @@ export async function apiRequest(path, options = {}) {
 
   const response = await fetch(buildUrl(path, params), {
     method,
+    credentials: "include",
     headers: requestHeaders,
     body:
       body === undefined

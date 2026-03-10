@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+﻿import { NavLink, Outlet } from "react-router-dom";
 import { logoutAllUserSessions, logoutUser } from "../api/auth";
 import { useAuth } from "../state/AuthContext";
 
@@ -17,7 +17,7 @@ export default function AppLayout() {
         await logoutUser();
       }
     } catch {
-      // Local cleanup still matters if the backend token is already invalid.
+      // Локальный выход важен даже если токен уже невалиден.
     } finally {
       clearAuthSession();
     }
@@ -28,28 +28,17 @@ export default function AppLayout() {
       <header className="topbar">
         <div className="container topbar-inner">
           <div>
-            <NavLink to="/vacancies" className="brand">
-              JobFinder
+            <NavLink to="/" className="brand">
+              <span className="brand-mark">JF</span>
+              <span className="brand-text">JobFinder</span>
             </NavLink>
-            <p className="topbar-subtitle">
-              Вакансии, отклики, резюме и модерация в одном интерфейсе
-            </p>
+            <p className="topbar-subtitle">Современный сервис поиска работы и сотрудников</p>
           </div>
 
           <nav className="nav">
             <NavLink to="/vacancies" className={linkClass}>
               Вакансии
             </NavLink>
-            {!isAuthenticated && (
-              <>
-                <NavLink to="/auth/login" className={linkClass}>
-                  Вход
-                </NavLink>
-                <NavLink to="/auth/register" className={linkClass}>
-                  Регистрация
-                </NavLink>
-              </>
-            )}
             {role === "applicant" && (
               <NavLink to="/applicant" className={linkClass}>
                 Соискатель
@@ -67,7 +56,7 @@ export default function AppLayout() {
             )}
           </nav>
 
-          {isAuthenticated && (
+          {isAuthenticated ? (
             <div className="auth-actions">
               <span className="role-badge">{role}</span>
               <button
@@ -85,6 +74,12 @@ export default function AppLayout() {
                 Выйти везде
               </button>
             </div>
+          ) : (
+            <div className="auth-actions">
+              <NavLink to="/auth/login" className="button">
+                Войти
+              </NavLink>
+            </div>
           )}
         </div>
       </header>
@@ -92,6 +87,21 @@ export default function AppLayout() {
       <main className="container page-content">
         <Outlet />
       </main>
+
+      <footer className="site-footer">
+        <div className="container site-footer-inner">
+          <div className="site-footer-brand">
+            <strong>JobFinder</strong>
+            <p className="muted">Поиск вакансий и кандидатов в одном месте.</p>
+          </div>
+          <div className="site-footer-links">
+            <a href="#">О сервисе</a>
+            <a href="#">Помощь</a>
+            <a href="#">Контакты</a>
+          </div>
+          <p className="muted">© {new Date().getFullYear()} JobFinder</p>
+        </div>
+      </footer>
     </div>
   );
 }

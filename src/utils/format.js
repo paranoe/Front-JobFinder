@@ -1,5 +1,5 @@
 export function formatDate(value) {
-  if (!value) return "—";
+  if (!value) return "-";
 
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
@@ -12,7 +12,7 @@ export function formatDate(value) {
 }
 
 export function formatDateTime(value) {
-  if (!value) return "—";
+  if (!value) return "-";
 
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;

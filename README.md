@@ -1,6 +1,11 @@
-# Frontend (React + Vite)
+﻿# JobFinder Frontend (React + Vite)
 
-## Quick start
+Frontend для `JobFinder-FastApi` с ролями:
+- `applicant`
+- `company`
+- `admin`
+
+## Быстрый старт
 
 ```bash
 npm install
@@ -8,47 +13,36 @@ cp .env.example .env
 npm run dev
 ```
 
-## Environment variables
+## Порты
 
-Create `.env` in project root:
+- Frontend (Vite dev): `http://localhost:3000`
+- Backend (FastAPI): `http://localhost:8000`
+
+В dev-режиме Vite проксирует запросы `/api/*` на backend, поэтому CORS на FastAPI не требуется.
+
+## Переменные окружения
+
+`.env`:
 
 ```env
-VITE_API_BASE_URL=http://localhost:3000/api
+# Пусто = запросы идут на текущий origin (/api/*), удобно для vite proxy
+VITE_API_BASE_URL=
+
+# Цель прокси для npm run dev
+VITE_PROXY_TARGET=http://localhost:8000
 ```
 
-## Routes
+Если нужно обращаться к API напрямую (без proxy), укажи полный адрес:
 
-- `/vacancies` - list of vacancies
-- `/vacancies/:id` - vacancy details page
-
-## Expected API shape
-
-`GET /vacancies`:
-
-```json
-[
-  {
-    "id": 1,
-    "title": "Frontend Developer",
-    "company": "Acme",
-    "location": "Minsk",
-    "salary": "$2500",
-    "description": "Optional",
-    "requirements": "Optional"
-  }
-]
+```env
+VITE_API_BASE_URL=http://localhost:8000
 ```
 
-`GET /vacancies/:id`:
+## Основные маршруты
 
-```json
-{
-  "id": 1,
-  "title": "Frontend Developer",
-  "company": "Acme",
-  "location": "Minsk",
-  "salary": "$2500",
-  "description": "Full description",
-  "requirements": "Required skills"
-}
-```
+- `/vacancies` - публичная лента вакансий
+- `/vacancies/:id` - карточка вакансии + отклик
+- `/auth/login`, `/auth/register` - авторизация
+- `/applicant` - кабинет соискателя
+- `/company` - кабинет компании
+- `/admin` - админ-панель

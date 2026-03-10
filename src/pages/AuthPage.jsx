@@ -74,17 +74,23 @@ export default function AuthPage({ mode }) {
   }
 
   return (
-    <section className="auth-shell">
-      <div className="card auth-card">
-        <p className="eyebrow">{mode === "register" ? "Регистрация" : "Вход"}</p>
-        <h1>
-          {mode === "register"
-            ? "Создать аккаунт под роль API"
-            : "Войти в личный кабинет"}
-        </h1>
-        <p className="muted">
-          Исходный путь: {location.state?.from || "/vacancies"}
-        </p>
+    <section className="auth-shell auth-shell-hh">
+      <div className="card auth-card auth-card-hh">
+        <div className="auth-tabs">
+          <Link to="/auth/login" className={mode === "login" ? "auth-tab active" : "auth-tab"}>
+            Вход
+          </Link>
+          <Link
+            to="/auth/register"
+            className={mode === "register" ? "auth-tab active" : "auth-tab"}
+          >
+            Регистрация
+          </Link>
+        </div>
+
+        <p className="eyebrow">Личный кабинет</p>
+        <h1>{mode === "register" ? "Создать аккаунт" : "Войти в аккаунт"}</h1>
+        <p className="muted">После входа вернем на: {location.state?.from || "/vacancies"}</p>
 
         <form className="stack-md" onSubmit={handleSubmit}>
           <label>
@@ -111,9 +117,9 @@ export default function AuthPage({ mode }) {
           <label>
             <span>Роль</span>
             <select name="role" value={form.role} onChange={handleChange}>
-              <option value="applicant">applicant</option>
-              <option value="company">company</option>
-              <option value="admin">admin</option>
+              <option value="applicant">Соискатель</option>
+              <option value="company">Компания</option>
+              <option value="admin">Администратор</option>
             </select>
           </label>
 
@@ -135,13 +141,6 @@ export default function AuthPage({ mode }) {
         </form>
 
         {status && <p className="error">{status}</p>}
-
-        <p className="muted">
-          {mode === "register" ? "Уже есть аккаунт?" : "Нужен новый аккаунт?"}{" "}
-          <Link to={mode === "register" ? "/auth/login" : "/auth/register"}>
-            {mode === "register" ? "Войти" : "Зарегистрироваться"}
-          </Link>
-        </p>
       </div>
     </section>
   );

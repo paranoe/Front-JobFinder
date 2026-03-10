@@ -20,12 +20,13 @@ import { formatDateTime, stringifyError } from "../utils/format";
 const catalogOptions = [
   "cities",
   "professions",
+  "skills",
   "currencies",
   "employment-types",
   "work-schedules",
   "experiences",
-  "vacancy-statuses",
-  "institutions",
+  "statuses",
+  "educational-institutions",
 ];
 
 export default function AdminDashboardPage() {

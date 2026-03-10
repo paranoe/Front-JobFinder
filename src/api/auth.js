@@ -1,4 +1,5 @@
 import { apiRequest } from "./client";
+import { getStoredAuth } from "../state/authStorage";
 
 export function registerUser(payload) {
   return apiRequest("/api/v1/auth/register", {
@@ -15,9 +16,11 @@ export function loginUser(payload) {
 }
 
 export function logoutUser() {
+  const refreshToken = getStoredAuth()?.refreshToken;
   return apiRequest("/api/v1/auth/logout", {
     method: "POST",
     auth: true,
+    body: refreshToken ? { refresh_token: refreshToken } : undefined,
   });
 }
 
