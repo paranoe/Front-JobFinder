@@ -9,9 +9,7 @@
   --soft-border: #e5eaf5;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -90,7 +88,6 @@ p {
   place-items: center;
   background: linear-gradient(140deg, #d6001c, #f05a72);
   color: #fff;
-  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.05em;
 }
@@ -138,6 +135,7 @@ p {
   flex-wrap: wrap;
 }
 
+.auth-actions { display: flex; gap: 8px; align-items: center; }
 .role-badge {
   border-radius: 999px;
   background: #edf2fb;
@@ -158,6 +156,12 @@ p {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
+.button-ghost {
+  background: #eef2f9;
+  color: #394563;
+}
+.button-danger { background: #cf1d29; }
+.button-reset { border: none; background: transparent; padding: 0; cursor: pointer; font: inherit; }
 
 .button:hover {
   transform: translateY(-1px);
@@ -213,6 +217,7 @@ p {
 .stack-sm {
   display: grid;
 }
+.grid-form h2 { grid-column: 1/-1; }
 
 .stack-lg {
   gap: 18px;
@@ -311,6 +316,8 @@ textarea:focus {
   background: #ebf2ff;
   color: #2454ad;
 }
+textarea { min-height: 100px; resize: vertical; }
+input:focus,select:focus,textarea:focus { outline: 2px solid #d5e4ff; border-color: #7ba5ff; }
 
 .success {
   background: #eaf9ee;
@@ -328,6 +335,7 @@ textarea:focus {
   flex-wrap: wrap;
 }
 
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip {
   display: inline-flex;
   align-items: center;
@@ -419,7 +427,22 @@ textarea:focus {
   flex-wrap: wrap;
   gap: 8px;
 }
+.vacancy-card:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(22, 36, 70, .1); }
+.vacancy-card-top { display:flex; justify-content:space-between; gap:8px; }
+.vacancy-title { font-size: 22px; line-height: 1.25; }
+.vacancy-salary { font-size: 28px; font-weight: 700; }
+.vacancy-description { color: #4f5b74; }
+.clamp-3{display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 
+.hh-home-head {
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at top left, rgba(214, 0, 28, 0.08), transparent 38%),
+    linear-gradient(135deg, #ffffff, #fafbff);
+}
+.hh-home-head h1 { font-size: clamp(28px, 4vw, 42px); line-height: 1.08; max-width: 760px; }
+.hh-home-subtitle { margin-top: 8px; max-width: 760px; color: #5b6780; }
+.hh-quick-search { margin-top: 14px; display:flex; flex-wrap:wrap; gap:8px; }
 .hh-quick-tag {
   border: 1px solid #dce3f0;
   border-radius: 999px;
@@ -540,6 +563,8 @@ textarea:focus {
   font-weight: 600;
   padding: 10px;
 }
+.site-footer-links { display:flex; gap:12px; }
+.site-footer-links a { text-decoration:none; color:#5b6780; }
 
 .auth-tab.active {
   color: #bf0019;
