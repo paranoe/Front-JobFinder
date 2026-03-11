@@ -35,6 +35,28 @@ const vacancyDefaults = {
   experience_id: "",
 };
 
+const companyLabels = {
+  name: "Название",
+  description: "Описание",
+  website: "Сайт",
+  logo: "Лого (URL)",
+  founded_year: "Год основания",
+  employee_count: "Количество сотрудников",
+};
+
+const vacancyLabels = {
+  title: "Название вакансии",
+  description: "Описание",
+  profession_id: "ID профессии",
+  city_id: "ID города",
+  employment_type_id: "ID типа занятости",
+  work_schedule_id: "ID графика",
+  salary_min: "Зарплата от",
+  salary_max: "Зарплата до",
+  currency_id: "ID валюты",
+  experience_id: "ID опыта",
+};
+
 export default function CompanyDashboardPage() {
   const [company, setCompany] = useState(companyDefaults);
   const [vacancies, setVacancies] = useState([]);
@@ -143,7 +165,7 @@ export default function CompanyDashboardPage() {
           <h2>Профиль компании</h2>
           {Object.keys(companyDefaults).map((key) => (
             <label key={key}>
-              <span>{key}</span>
+              <span>{companyLabels[key] || key}</span>
               {key === "description" ? (
                 <textarea
                   value={company[key] || ""}
@@ -186,7 +208,7 @@ export default function CompanyDashboardPage() {
           <h2>Создать вакансию</h2>
           {Object.keys(vacancyDefaults).map((key) => (
             <label key={key}>
-              <span>{key}</span>
+              <span>{vacancyLabels[key] || key}</span>
               {key === "description" ? (
                 <textarea
                   value={vacancyForm[key]}
@@ -282,7 +304,7 @@ export default function CompanyDashboardPage() {
         >
           <h2>Навыки вакансии</h2>
           <label>
-            <span>vacancy_id</span>
+            <span>ID вакансии</span>
             <input
               type="number"
               value={skillForm.vacancy_id}
@@ -291,7 +313,7 @@ export default function CompanyDashboardPage() {
             />
           </label>
           <label>
-            <span>name</span>
+            <span>Навык</span>
             <input
               value={skillForm.name}
               onChange={(e) => patchState(setSkillForm, "name", e.target.value)}
@@ -299,7 +321,7 @@ export default function CompanyDashboardPage() {
             />
           </label>
           <label>
-            <span>skill_id</span>
+            <span>ID навыка</span>
             <input
               type="number"
               value={skillForm.skill_id}
@@ -337,7 +359,7 @@ export default function CompanyDashboardPage() {
         >
           <h2>Отклики на вакансию</h2>
           <label>
-            <span>vacancy_id</span>
+            <span>ID вакансии</span>
             <input
               type="number"
               value={applicationFilter.vacancy_id}
@@ -346,7 +368,7 @@ export default function CompanyDashboardPage() {
             />
           </label>
           <label>
-            <span>status filter</span>
+            <span>Фильтр статуса</span>
             <select
               value={applicationFilter.status}
               onChange={(e) => patchState(setApplicationFilter, "status", e.target.value)}
@@ -390,9 +412,9 @@ export default function CompanyDashboardPage() {
           );
         }}
       >
-        <h2>PATCH статуса отклика</h2>
+        <h2>Изменить статус отклика</h2>
         <label>
-          <span>vacancy_id</span>
+          <span>ID вакансии</span>
           <input
             type="number"
             value={applicationFilter.vacancy_id}
@@ -401,7 +423,7 @@ export default function CompanyDashboardPage() {
           />
         </label>
         <label>
-          <span>resume_id</span>
+          <span>ID резюме</span>
           <input
             type="number"
             value={applicationFilter.resume_id}
@@ -410,7 +432,7 @@ export default function CompanyDashboardPage() {
           />
         </label>
         <label>
-          <span>next status</span>
+          <span>Новый статус</span>
           <select
             value={applicationFilter.next_status}
             onChange={(e) => patchState(setApplicationFilter, "next_status", e.target.value)}

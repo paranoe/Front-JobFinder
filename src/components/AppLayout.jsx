@@ -36,6 +36,9 @@ export default function AppLayout() {
           </div>
 
           <nav className="nav">
+            <NavLink to="/" className={linkClass} end>
+              Главная
+            </NavLink>
             <NavLink to="/vacancies" className={linkClass}>
               Вакансии
             </NavLink>
@@ -76,7 +79,7 @@ export default function AppLayout() {
             </div>
           ) : (
             <div className="auth-actions">
-              <NavLink to="/auth/login" className="button">
+              <NavLink to="/account/login?role=applicant&backurl=%2F&hhtmFrom=main" className="button">
                 Войти
               </NavLink>
             </div>

@@ -66,11 +66,11 @@ export default function PublicVacanciesPage() {
   return (
     <section className="hh-home stack-lg">
       <div className="card hh-home-head">
-        <p className="eyebrow">РџРѕРёСЃРє РІР°РєР°РЅСЃРёР№</p>
-        <h1>РќР°Р№РґРёС‚Рµ СЂР°Р±РѕС‚Сѓ, РєРѕС‚РѕСЂР°СЏ РїРѕРґС…РѕРґРёС‚ РёРјРµРЅРЅРѕ РІР°Рј</h1>
+        <p className="eyebrow">Поиск вакансий</p>
+        <h1>Найдите работу, которая подходит именно вам</h1>
         <p className="hh-home-subtitle">
-          РџРѕРёСЃРє СЂР°Р±РѕС‚Р°РµС‚ РїРѕ РІР°С€РµРјСѓ FastAPI API. РСЃРїРѕР»СЊР·СѓР№С‚Рµ СЃС‚СЂРѕРєСѓ РїРѕРёСЃРєР° Рё С„РёР»СЊС‚СЂС‹
-          СЃР»РµРІР°, С‡С‚РѕР±С‹ Р±С‹СЃС‚СЂРѕ СЃСѓР·РёС‚СЊ РІС‹РґР°С‡Сѓ.
+          Лента вакансий подключена к вашему FastAPI backend. Ищите по ключевым словам,
+          компании и параметрам, чтобы быстро найти релевантные предложения.
         </p>
         <div className="hh-quick-search">
           {quickSearches.map((item) => (
@@ -93,25 +93,25 @@ export default function PublicVacanciesPage() {
             name="search"
             value={filters.search}
             onChange={handleChange}
-            placeholder="РџСЂРѕС„РµСЃСЃРёСЏ, РЅР°РІС‹Рє РёР»Рё РєРѕРјРїР°РЅРёСЏ"
+            placeholder="Профессия, навык или компания"
           />
           <button className="button hh-search-button" type="submit">
-            РќР°Р№С‚Рё
+            Найти
           </button>
         </div>
       </form>
 
       <div className="hh-home-layout">
         <form className="card hh-filters-card stack-md" onSubmit={handleFiltersSubmit}>
-          <h2>Р¤РёР»СЊС‚СЂС‹</h2>
+          <h2>Фильтры</h2>
 
           <label>
-            <span>Р“РѕСЂРѕРґ (ID)</span>
+            <span>Город (ID)</span>
             <input name="city_id" value={filters.city_id} onChange={handleChange} />
           </label>
 
           <label>
-            <span>РџСЂРѕС„РµСЃСЃРёСЏ (ID)</span>
+            <span>Профессия (ID)</span>
             <input
               name="profession_id"
               value={filters.profession_id}
@@ -120,46 +120,46 @@ export default function PublicVacanciesPage() {
           </label>
 
           <label>
-            <span>РљРѕРјРїР°РЅРёСЏ (ID)</span>
+            <span>Компания (ID)</span>
             <input name="company_id" value={filters.company_id} onChange={handleChange} />
           </label>
 
           <label>
-            <span>Р›РёРјРёС‚</span>
+            <span>Лимит</span>
             <input name="limit" type="number" value={filters.limit} onChange={handleChange} />
           </label>
 
           <label>
-            <span>РЎРјРµС‰РµРЅРёРµ</span>
+            <span>Смещение</span>
             <input name="skip" type="number" value={filters.skip} onChange={handleChange} />
           </label>
 
           <div className="stack-sm">
             <button className="button" type="submit">
-              РџСЂРёРјРµРЅРёС‚СЊ
+              Применить
             </button>
             <button
               className="button button-ghost"
               type="button"
               onClick={handleResetFilters}
             >
-              РЎР±СЂРѕСЃРёС‚СЊ
+              Сбросить
             </button>
           </div>
         </form>
 
         <div className="hh-results">
           <div className="card hh-results-head">
-            <h2>Р’Р°РєР°РЅСЃРёРё</h2>
+            <h2>Вакансии</h2>
             {!loading && !error && (
-              <span className="muted">РќР°Р№РґРµРЅРѕ: {vacancies.length}</span>
+              <span className="muted">Найдено: {vacancies.length}</span>
             )}
           </div>
 
-          {loading && <p>Р—Р°РіСЂСѓР·РєР° РІР°РєР°РЅСЃРёР№...</p>}
+          {loading && <p>Загрузка вакансий...</p>}
           {error && <p className="error">{error}</p>}
           {!loading && !error && vacancies.length === 0 && (
-            <div className="card empty-state">РџРѕ С‚РµРєСѓС‰РёРј С„РёР»СЊС‚СЂР°Рј РІР°РєР°РЅСЃРёРё РЅРµ РЅР°Р№РґРµРЅС‹.</div>
+            <div className="card empty-state">По текущим фильтрам вакансии не найдены.</div>
           )}
 
           <div className="vacancies-grid hh-vacancies-grid">
@@ -172,4 +172,3 @@ export default function PublicVacanciesPage() {
     </section>
   );
 }
-

@@ -15,10 +15,12 @@ export default function App() {
     <AuthProvider>
       <Routes>
         <Route path="/" element={<AppLayout />}>
-          <Route index element={<HomePage />} />
+          <Route index element={<PublicVacanciesPage />} />
+          <Route path="home" element={<HomePage />} />
           <Route path="vacancies" element={<PublicVacanciesPage />} />
           <Route path="vacancies/:id" element={<VacancyDetailsPage />} />
           <Route path="auth/login" element={<AuthPage mode="login" />} />
+          <Route path="account/login" element={<AuthPage mode="login" />} />
           <Route path="auth/register" element={<AuthPage mode="register" />} />
           <Route
             path="applicant"
