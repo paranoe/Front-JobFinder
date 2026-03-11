@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useSearchParams } from "react-router-dom";
 import { loginUser, registerUser } from "../api/auth";
 import { useAuth } from "../state/AuthContext";
 import { stringifyError } from "../utils/format";
@@ -19,10 +19,24 @@ const initialLogin = {
 
 export default function AuthPage({ mode }) {
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const { isAuthenticated, role, setAuthSession } = useAuth();
-  const [form, setForm] = useState(mode === "register" ? initialRegister : initialLogin);
+  const [form, setForm] = useState(() => {
+    const nextRole = searchParams.get("role") || "applicant";
+    const safeRole = ["applicant", "company", "admin"].includes(nextRole)
+      ? nextRole
+      : "applicant";
+
+    if (mode === "register") {
+      return { ...initialRegister, role: safeRole };
+    }
+
+    return { ...initialLogin, role: safeRole };
+  });
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const backUrl = searchParams.get("backurl") || location.state?.from || "/vacancies";
 
   if (isAuthenticated) {
     const redirectMap = {
@@ -31,7 +45,10 @@ export default function AuthPage({ mode }) {
       admin: "/admin",
     };
 
-    return <Navigate to={redirectMap[role] || "/vacancies"} replace />;
+    const dashboard = redirectMap[role] || "/vacancies";
+    const target = backUrl.startsWith("/") ? backUrl : dashboard;
+
+    return <Navigate to={target} replace />;
   }
 
   function handleChange(event) {
@@ -75,7 +92,7 @@ export default function AuthPage({ mode }) {
 
   return (
     <section className="auth-shell auth-shell-hh">
-      <div className="card auth-card auth-card-hh">
+      <div className="card auth-card auth-card-hh stack-md">
         <div className="auth-tabs">
           <Link to="/auth/login" className={mode === "login" ? "auth-tab active" : "auth-tab"}>
             Вход
@@ -88,9 +105,11 @@ export default function AuthPage({ mode }) {
           </Link>
         </div>
 
-        <p className="eyebrow">Личный кабинет</p>
-        <h1>{mode === "register" ? "Создать аккаунт" : "Войти в аккаунт"}</h1>
-        <p className="muted">После входа вернем на: {location.state?.from || "/vacancies"}</p>
+        <div className="stack-sm">
+          <p className="eyebrow">JobFinder Account</p>
+          <h1>{mode === "register" ? "Создать аккаунт" : "Вход в профиль"}</h1>
+          <p className="muted">Возврат после входа: {backUrl}</p>
+        </div>
 
         <form className="stack-md" onSubmit={handleSubmit}>
           <label>
@@ -136,7 +155,7 @@ export default function AuthPage({ mode }) {
           )}
 
           <button className="button" type="submit" disabled={loading}>
-            {loading ? "Отправка..." : mode === "register" ? "Зарегистрироваться" : "Войти"}
+            {loading ? "Проверяем..." : mode === "register" ? "Создать аккаунт" : "Войти"}
           </button>
         </form>
 
