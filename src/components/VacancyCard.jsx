@@ -8,12 +8,12 @@ export default function VacancyCard({ vacancy }) {
         <div className="stack-sm">
           <p className="eyebrow">{vacancy.profession_name || "Вакансия"}</p>
           <h3 className="vacancy-title">{vacancy.title}</h3>
+          <p className="vacancy-company muted">{vacancy.company_name}</p>
         </div>
         <span className="chip">{vacancy.city_name}</span>
       </div>
 
       <p className="vacancy-salary">{formatSalary(vacancy.salary_min, vacancy.salary_max)}</p>
-      <p className="vacancy-company muted">{vacancy.company_name}</p>
       <p className="clamp-3 vacancy-description">{vacancy.description}</p>
 
       <div className="card-footer">

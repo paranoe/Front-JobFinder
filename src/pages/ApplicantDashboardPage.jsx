@@ -42,6 +42,25 @@ const workDefaults = {
   description: "",
 };
 const applicationDefaults = { vacancy_id: "", resume_id: "", status: "pending" };
+const workLabels = {
+  resume_id: "ID резюме",
+  company_name: "Компания",
+  position: "Должность",
+  start_date: "Дата начала",
+  end_date: "Дата окончания",
+  description: "Описание обязанностей",
+};
+
+const profileLabels = {
+  photo: "Фото (URL)",
+  phone: "Телефон",
+  birth_date: "Дата рождения",
+  gender: "Пол",
+  first_name: "Имя",
+  last_name: "Фамилия",
+  middle_name: "Отчество",
+  city_name: "Город",
+};
 
 export default function ApplicantDashboardPage() {
   const [profile, setProfile] = useState(profileDefaults);
@@ -133,11 +152,12 @@ export default function ApplicantDashboardPage() {
             runAction(() => updateApplicantProfile(profile), "Профиль соискателя обновлен.");
           }}
         >
-          <h2>Профиль</h2>
+          <h2>Профиль соискателя</h2>
           {Object.entries(profileDefaults).map(([key]) => (
             <label key={key}>
-              <span>{key}</span>
+              <span>{profileLabels[key] || key}</span>
               <input
+                type={key.includes("date") ? "date" : "text"}
                 value={profile[key] || ""}
                 onChange={(e) => patchState(setProfile, key, e.target.value)}
               />
@@ -161,7 +181,7 @@ export default function ApplicantDashboardPage() {
         >
           <h2>Новое резюме</h2>
           <label>
-            <span>profession_id</span>
+            <span>ID профессии</span>
             <input
               type="number"
               value={resumeForm.profession_id}
@@ -189,7 +209,7 @@ export default function ApplicantDashboardPage() {
         >
           <h2>Добавить образование</h2>
           <label>
-            <span>institution_id</span>
+            <span>ID учебного учреждения</span>
             <input
               type="number"
               value={educationForm.institution_id}
@@ -198,7 +218,7 @@ export default function ApplicantDashboardPage() {
             />
           </label>
           <label>
-            <span>start_date</span>
+            <span>Дата начала</span>
             <input
               type="date"
               value={educationForm.start_date}
@@ -207,7 +227,7 @@ export default function ApplicantDashboardPage() {
             />
           </label>
           <label>
-            <span>end_date</span>
+            <span>Дата окончания</span>
             <input
               type="date"
               value={educationForm.end_date}
@@ -340,7 +360,7 @@ export default function ApplicantDashboardPage() {
         >
           <h2>Навыки резюме</h2>
           <label>
-            <span>resume_id</span>
+            <span>ID резюме</span>
             <input
               type="number"
               value={skillForm.resume_id}
@@ -389,7 +409,7 @@ export default function ApplicantDashboardPage() {
           <h2>Опыт работы</h2>
           {Object.entries(workDefaults).map(([key]) => (
             <label key={key}>
-              <span>{key}</span>
+              <span>{workLabels[key] || key}</span>
               {key.includes("date") ? (
                 <input
                   type="date"
@@ -477,7 +497,7 @@ export default function ApplicantDashboardPage() {
         >
           <h2>Отклик по ID</h2>
           <label>
-            <span>vacancy_id</span>
+            <span>ID вакансии</span>
             <input
               type="number"
               value={applicationForm.vacancy_id}
@@ -486,7 +506,7 @@ export default function ApplicantDashboardPage() {
             />
           </label>
           <label>
-            <span>resume_id</span>
+            <span>ID резюме</span>
             <input
               type="number"
               value={applicationForm.resume_id}
@@ -495,7 +515,7 @@ export default function ApplicantDashboardPage() {
             />
           </label>
           <label>
-            <span>status</span>
+            <span>Статус</span>
             <select
               value={applicationForm.status}
               onChange={(e) => patchState(setApplicationForm, "status", e.target.value)}

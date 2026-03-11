@@ -141,7 +141,7 @@ export default function AdminDashboardPage() {
             ))}
           </div>
           <label>
-            <span>user_id</span>
+            <span>ID пользователя</span>
             <input
               type="number"
               value={filters.targetUserId}
@@ -150,7 +150,7 @@ export default function AdminDashboardPage() {
             />
           </label>
           <label>
-            <span>is_active</span>
+            <span>Активен</span>
             <select
               value={filters.targetUserActive}
               onChange={(e) => patchFilter("targetUserActive", e.target.value)}
@@ -160,7 +160,7 @@ export default function AdminDashboardPage() {
             </select>
           </label>
           <button className="button" type="submit">
-            PATCH user status
+            Сохранить статус
           </button>
         </form>
 
@@ -242,7 +242,7 @@ export default function AdminDashboardPage() {
             ))}
           </div>
           <label>
-            <span>vacancy_id</span>
+            <span>ID вакансии</span>
             <input
               type="number"
               value={filters.targetVacancyId}
@@ -251,7 +251,7 @@ export default function AdminDashboardPage() {
             />
           </label>
           <label>
-            <span>status_id</span>
+            <span>ID статуса</span>
             <input
               type="number"
               value={filters.targetVacancyStatusId}
@@ -260,7 +260,7 @@ export default function AdminDashboardPage() {
             />
           </label>
           <button className="button" type="submit">
-            PATCH vacancy status
+            Сохранить статус вакансии
           </button>
         </form>
 
@@ -285,7 +285,7 @@ export default function AdminDashboardPage() {
         >
           <h2>Справочники</h2>
           <label>
-            <span>catalog_name</span>
+            <span>Название справочника</span>
             <select
               value={filters.catalogName}
               onChange={(e) => patchFilter("catalogName", e.target.value)}
@@ -298,7 +298,7 @@ export default function AdminDashboardPage() {
             </select>
           </label>
           <button className="button" type="submit">
-            Загрузить каталог
+            Загрузить
           </button>
           <div className="stack-sm">
             {catalogItems.map((item) => (
@@ -322,7 +322,7 @@ export default function AdminDashboardPage() {
             ))}
           </div>
           <label>
-            <span>item_id for update</span>
+            <span>ID элемента для обновления</span>
             <input
               type="number"
               value={filters.catalogItemId}
@@ -330,7 +330,7 @@ export default function AdminDashboardPage() {
             />
           </label>
           <label>
-            <span>name</span>
+            <span>Название</span>
             <input
               value={filters.catalogItemName}
               onChange={(e) => patchFilter("catalogItemName", e.target.value)}
@@ -348,7 +348,7 @@ export default function AdminDashboardPage() {
                 )
               }
             >
-              POST item
+              Добавить элемент
             </button>
             <button
               className="button button-secondary"
@@ -363,7 +363,7 @@ export default function AdminDashboardPage() {
                 )
               }
             >
-              PUT item
+              Обновить элемент
             </button>
           </div>
         </form>
