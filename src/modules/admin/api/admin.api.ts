@@ -1,8 +1,8 @@
 import { apiClient } from '../../../shared/api/client';
-import type { DictionaryItem, PaginatedResponse, Vacancy } from '../../../shared/types/models';
+import type { AdminUser, DictionaryItem } from '../../../shared/types/models';
 
 export const getAdminUsers = async (params: Record<string, unknown>) => {
-  const { data } = await apiClient.get<PaginatedResponse<{ id: number; email: string; role: string; is_active: boolean }>>('/admin/users', { params });
+  const { data } = await apiClient.get<AdminUser[]>('/admin/users', { params });
   return data;
 };
 
@@ -12,11 +12,11 @@ export const patchUserStatus = async (userId: number, is_active: boolean) => {
 };
 
 export const getAdminVacancies = async (params: Record<string, unknown>) => {
-  const { data } = await apiClient.get<PaginatedResponse<Vacancy>>('/admin/vacancies', { params });
+  const { data } = await apiClient.get('/admin/vacancies', { params });
   return data;
 };
 
-export const getDictionaryAdmin = async (entity: string) => {
-  const { data } = await apiClient.get<DictionaryItem[]>(`/admin/${entity}`);
+export const getDictionaryAdmin = async (catalogName: string) => {
+  const { data } = await apiClient.get<DictionaryItem[]>(`/admin/catalogs/${catalogName}`);
   return data;
 };

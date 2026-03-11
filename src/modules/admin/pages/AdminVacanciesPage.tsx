@@ -14,7 +14,7 @@ export const AdminVacanciesPage = () => {
   return (
     <Paper sx={{ height: 560, p: 2 }}>
       <Typography variant="h5" mb={2}>Вакансии</Typography>
-      <DataGrid rows={query.data?.items ?? []} columns={columns} loading={query.isLoading} />
+      <DataGrid rows={query.data ?? []} columns={columns} loading={query.isLoading} />
     </Paper>
   );
 };

@@ -1,14 +1,15 @@
 # Front JobFinder
 
-Современный frontend на React + TypeScript для backend проекта JobFinder-FastAPI.
+React + TypeScript frontend для backend проекта JobFinder FastAPI.
 
-## Технологии
-- Vite + React + TypeScript
-- React Router
-- MUI (кастомизированная тема)
+## Что уже реализовано
+- Vite + React + TypeScript (strict)
+- React Router (public/account/admin/auth)
+- MUI + кастомная тема
 - React Query + Zustand
-- Axios с interceptors
-- React Hook Form + Zod
+- axios c interceptors
+- Базовые страницы: лента вакансий, карточка вакансии, auth, account, admin
+- Error Boundary, skeleton/error состояния
 - ESLint + Prettier + Husky
 
 ## Запуск
@@ -17,6 +18,9 @@ npm install
 npm run dev
 ```
 
+Приложение запускается на `http://localhost:3000`.
+
+## Переменные окружения
 Создайте `.env`:
 ```bash
 VITE_API_BASE_URL=http://localhost:8000/api/v1

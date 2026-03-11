@@ -32,7 +32,7 @@ export const AdminUsersPage = () => {
   return (
     <Paper sx={{ height: 560, p: 2 }}>
       <Stack spacing={1} mb={2}><Typography variant="h5">Пользователи</Typography></Stack>
-      <DataGrid rows={query.data?.items ?? []} columns={columns} loading={query.isLoading} disableRowSelectionOnClick />
+      <DataGrid rows={query.data ?? []} columns={columns} loading={query.isLoading} disableRowSelectionOnClick />
     </Paper>
   );
 };

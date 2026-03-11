@@ -3,30 +3,33 @@ export interface DictionaryItem {
   name: string;
 }
 
-export interface Vacancy {
+export interface VacancyListItem {
   id: number;
   title: string;
-  description?: string;
-  salary_from?: number;
-  salary_to?: number;
-  city?: DictionaryItem;
-  profession?: DictionaryItem;
-  company?: { id: number; name: string };
-  experience?: DictionaryItem;
-  employment_type?: DictionaryItem;
-  work_schedule?: DictionaryItem;
-  currency?: DictionaryItem;
-  skills?: DictionaryItem[];
-  created_at?: string;
-  updated_at?: string;
-  status?: DictionaryItem;
+  description: string;
+  salary_min: number;
+  salary_max: number;
+  created_at: string;
+  company_name: string;
+  city_name: string;
+  profession_name: string;
 }
 
-export interface PaginatedResponse<T> {
-  items: T[];
-  total: number;
-  skip: number;
-  limit: number;
+export interface VacancyDetails extends VacancyListItem {
+  updated_at: string;
+  employment_type: string;
+  work_schedule: string;
+  currency: string;
+  experience: string;
+  skills: string[];
+}
+
+export interface AdminUser {
+  id: number;
+  email: string;
+  role: string;
+  is_active: boolean;
+  created_at: string;
 }
 
 export interface AuthUser {
