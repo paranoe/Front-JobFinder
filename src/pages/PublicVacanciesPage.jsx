@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import VacancyCard from "../components/VacancyCard";
 import { getPublicVacancies } from "../api/public";
 import { stringifyError } from "../utils/format";
@@ -12,7 +12,7 @@ const initialFilters = {
   skip: 0,
 };
 
-const quickSearches = ["Frontend", "Python", "QA", "Product Manager", "DevOps"];
+const quickSearches = ["Frontend", "Backend", "Python", "QA", "Product", "DevOps"];
 
 export default function PublicVacanciesPage() {
   const [filters, setFilters] = useState(initialFilters);
@@ -36,6 +36,8 @@ export default function PublicVacanciesPage() {
   useEffect(() => {
     loadVacancies();
   }, []);
+
+  const citiesCount = useMemo(() => new Set(vacancies.map((item) => item.city_name)).size, [vacancies]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -66,23 +68,47 @@ export default function PublicVacanciesPage() {
   return (
     <section className="hh-home stack-lg">
       <div className="card hh-home-head">
-        <p className="eyebrow">РџРѕРёСЃРє РІР°РєР°РЅСЃРёР№</p>
-        <h1>РќР°Р№РґРёС‚Рµ СЂР°Р±РѕС‚Сѓ, РєРѕС‚РѕСЂР°СЏ РїРѕРґС…РѕРґРёС‚ РёРјРµРЅРЅРѕ РІР°Рј</h1>
-        <p className="hh-home-subtitle">
-          РџРѕРёСЃРє СЂР°Р±РѕС‚Р°РµС‚ РїРѕ РІР°С€РµРјСѓ FastAPI API. РСЃРїРѕР»СЊР·СѓР№С‚Рµ СЃС‚СЂРѕРєСѓ РїРѕРёСЃРєР° Рё С„РёР»СЊС‚СЂС‹
-          СЃР»РµРІР°, С‡С‚РѕР±С‹ Р±С‹СЃС‚СЂРѕ СЃСѓР·РёС‚СЊ РІС‹РґР°С‡Сѓ.
-        </p>
-        <div className="hh-quick-search">
-          {quickSearches.map((item) => (
-            <button
-              key={item}
-              type="button"
-              className="hh-quick-tag"
-              onClick={() => handleQuickSearch(item)}
-            >
-              {item}
-            </button>
-          ))}
+        <div className="hh-hero-grid">
+          <div className="stack-md">
+            <p className="eyebrow">Актуальные вакансии</p>
+            <h1>Работа мечты ближе, чем кажется</h1>
+            <p className="hh-home-subtitle">
+              Вдохновлено лучшими job-board практиками: быстрый поиск, удобные фильтры и
+              понятная выдача. Вся лента подключена к вашему FastAPI backend.
+            </p>
+            <div className="hh-quick-search">
+              {quickSearches.map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  className="hh-quick-tag"
+                  onClick={() => handleQuickSearch(item)}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+            <div className="hh-trust-row">
+              <span className="chip">Скоростной поиск</span>
+              <span className="chip">Единый UX для всех ролей</span>
+              <span className="chip">Интеграция с FastAPI</span>
+            </div>
+          </div>
+
+          <div className="hh-stats-panel">
+            <div>
+              <p className="muted">Найдено вакансий</p>
+              <strong>{vacancies.length}</strong>
+            </div>
+            <div>
+              <p className="muted">Городов в выдаче</p>
+              <strong>{citiesCount}</strong>
+            </div>
+            <div>
+              <p className="muted">Лимит страницы</p>
+              <strong>{filters.limit}</strong>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -93,73 +119,63 @@ export default function PublicVacanciesPage() {
             name="search"
             value={filters.search}
             onChange={handleChange}
-            placeholder="РџСЂРѕС„РµСЃСЃРёСЏ, РЅР°РІС‹Рє РёР»Рё РєРѕРјРїР°РЅРёСЏ"
+            placeholder="Должность, навык или компания"
           />
           <button className="button hh-search-button" type="submit">
-            РќР°Р№С‚Рё
+            Найти вакансии
           </button>
         </div>
       </form>
 
       <div className="hh-home-layout">
         <form className="card hh-filters-card stack-md" onSubmit={handleFiltersSubmit}>
-          <h2>Р¤РёР»СЊС‚СЂС‹</h2>
+          <h2>Фильтры поиска</h2>
 
           <label>
-            <span>Р“РѕСЂРѕРґ (ID)</span>
+            <span>Город (ID)</span>
             <input name="city_id" value={filters.city_id} onChange={handleChange} />
           </label>
 
           <label>
-            <span>РџСЂРѕС„РµСЃСЃРёСЏ (ID)</span>
-            <input
-              name="profession_id"
-              value={filters.profession_id}
-              onChange={handleChange}
-            />
+            <span>Профессия (ID)</span>
+            <input name="profession_id" value={filters.profession_id} onChange={handleChange} />
           </label>
 
           <label>
-            <span>РљРѕРјРїР°РЅРёСЏ (ID)</span>
+            <span>Компания (ID)</span>
             <input name="company_id" value={filters.company_id} onChange={handleChange} />
           </label>
 
           <label>
-            <span>Р›РёРјРёС‚</span>
+            <span>Лимит</span>
             <input name="limit" type="number" value={filters.limit} onChange={handleChange} />
           </label>
 
           <label>
-            <span>РЎРјРµС‰РµРЅРёРµ</span>
+            <span>Смещение</span>
             <input name="skip" type="number" value={filters.skip} onChange={handleChange} />
           </label>
 
           <div className="stack-sm">
             <button className="button" type="submit">
-              РџСЂРёРјРµРЅРёС‚СЊ
+              Применить фильтры
             </button>
-            <button
-              className="button button-ghost"
-              type="button"
-              onClick={handleResetFilters}
-            >
-              РЎР±СЂРѕСЃРёС‚СЊ
+            <button className="button button-ghost" type="button" onClick={handleResetFilters}>
+              Сбросить
             </button>
           </div>
         </form>
 
         <div className="hh-results">
           <div className="card hh-results-head">
-            <h2>Р’Р°РєР°РЅСЃРёРё</h2>
-            {!loading && !error && (
-              <span className="muted">РќР°Р№РґРµРЅРѕ: {vacancies.length}</span>
-            )}
+            <h2>Лента вакансий</h2>
+            {!loading && !error && <span className="muted">Показано: {vacancies.length}</span>}
           </div>
 
-          {loading && <p>Р—Р°РіСЂСѓР·РєР° РІР°РєР°РЅСЃРёР№...</p>}
+          {loading && <p>Загрузка вакансий...</p>}
           {error && <p className="error">{error}</p>}
           {!loading && !error && vacancies.length === 0 && (
-            <div className="card empty-state">РџРѕ С‚РµРєСѓС‰РёРј С„РёР»СЊС‚СЂР°Рј РІР°РєР°РЅСЃРёРё РЅРµ РЅР°Р№РґРµРЅС‹.</div>
+            <div className="card empty-state">По текущим фильтрам ничего не найдено.</div>
           )}
 
           <div className="vacancies-grid hh-vacancies-grid">
@@ -172,4 +188,3 @@ export default function PublicVacanciesPage() {
     </section>
   );
 }
-

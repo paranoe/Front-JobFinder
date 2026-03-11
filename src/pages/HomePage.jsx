@@ -1,4 +1,4 @@
-﻿import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const categories = [
   "IT и разработка",
@@ -11,37 +11,16 @@ const categories = [
 
 const advantages = [
   {
-    title: "1000+ актуальных вакансий",
-    text: "Свежие предложения от проверенных компаний ежедневно.",
+    title: "Прозрачный поиск",
+    text: "Удобная лента вакансий и фильтрация по параметрам прямо из вашего backend API.",
   },
   {
-    title: "Удобный поиск и фильтры",
-    text: "Быстро находите предложения по навыкам, городу и зарплате.",
+    title: "Современный интерфейс",
+    text: "Чистый UI в стиле топовых job-платформ, адаптивный под десктоп и мобильные устройства.",
   },
   {
-    title: "Прямой отклик",
-    text: "Откликайтесь в пару кликов и отслеживайте статус заявок.",
-  },
-];
-
-const employerCards = [
-  {
-    name: "TechNova",
-    role: "Нанимает Frontend и Backend",
-    image:
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    name: "Retail Group",
-    role: "Нанимает Product и Analysts",
-    image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    name: "LogiX",
-    role: "Нанимает Operations и Support",
-    image:
-      "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80",
+    title: "Сквозные роли",
+    text: "Единый дизайн для соискателя, работодателя и администратора без разрыва UX.",
   },
 ];
 
@@ -49,18 +28,18 @@ export default function HomePage() {
   return (
     <section className="landing stack-lg">
       <div className="landing-hero card">
-        <div className="landing-hero-content">
-          <p className="eyebrow">Платформа поиска работы</p>
-          <h1>Найдите работу мечты быстрее</h1>
+        <div className="landing-hero-content stack-md">
+          <p className="eyebrow">Платформа под ваш FastAPI backend</p>
+          <h1>Новый уровень найма и поиска работы</h1>
           <p className="landing-hero-copy">
-            Современный сервис поиска вакансий: от стажировки до senior-ролей.
-            Умные фильтры, удобные отклики и прозрачный процесс найма.
+            JobFinder — современный сервис для кандидатов и компаний. Быстро ищите вакансии,
+            откликайтесь и управляйте подбором в едином интерфейсе.
           </p>
           <div className="landing-hero-actions">
             <Link to="/vacancies" className="button">
-              Смотреть вакансии
+              К вакансиям
             </Link>
-            <Link to="/auth/login" className="button button-secondary">
+            <Link to="/account/login?role=applicant&backurl=%2F" className="button button-secondary">
               Войти в кабинет
             </Link>
           </div>
@@ -72,16 +51,16 @@ export default function HomePage() {
 
       <div className="landing-stats">
         <div className="card landing-stat">
-          <strong>25 000+</strong>
-          <span>вакансий в базе</span>
+          <strong>24/7</strong>
+          <span>доступ к платформе</span>
         </div>
         <div className="card landing-stat">
-          <strong>4 200+</strong>
-          <span>компаний нанимают</span>
+          <strong>3 роли</strong>
+          <span>в едином UX-подходе</span>
         </div>
         <div className="card landing-stat">
-          <strong>1 300+</strong>
-          <span>новых вакансий в день</span>
+          <strong>FastAPI</strong>
+          <span>нативная интеграция backend</span>
         </div>
       </div>
 
@@ -89,7 +68,7 @@ export default function HomePage() {
         <div className="landing-block-head">
           <h2>Популярные направления</h2>
           <Link to="/vacancies" className="landing-link">
-            Все вакансии
+            Смотреть всё
           </Link>
         </div>
         <div className="landing-categories">
@@ -114,18 +93,16 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="card landing-block">
-          <h2>Компании, которые нанимают</h2>
-          <div className="landing-employers">
-            {employerCards.map((company) => (
-              <article key={company.name} className="landing-employer">
-                <img src={company.image} alt={company.name} />
-                <div>
-                  <h3>{company.name}</h3>
-                  <p className="muted">{company.role}</p>
-                </div>
-              </article>
-            ))}
+        <div className="card landing-block stack-md">
+          <h2>Запуск в 3 шага</h2>
+          <div className="subcard">
+            <strong>1.</strong> Зарегистрируйтесь по роли и войдите в кабинет
+          </div>
+          <div className="subcard">
+            <strong>2.</strong> Заполните профиль или создайте вакансию в пару кликов
+          </div>
+          <div className="subcard">
+            <strong>3.</strong> Откликайтесь и управляйте подбором в единой панели
           </div>
         </div>
       </div>
